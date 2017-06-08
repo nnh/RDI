@@ -1,0 +1,21 @@
+---
+title: "RDI"
+author: "Akiko Kada"
+date: "2017年6月8日"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("risksetROC", lib.loc="/Library/Frameworks/R.framework/Versions/3.2/Resources/library")
+source("./program/RDI_pgm.R", encoding = "UTF-8")
+```
+
+## RDI Survival
+
+```{r cars}
+gs.ef<-survfit(formula = Surv(OS_DAY, DETH_FLG) ~ RISK, data=ads2)
+plot(gs.ef,lty=1:2)
+gs.ef<-survfit(formula = Surv(OS_DAY, DETH_FLG) ~ SEX, data=ads2)
+plot(gs.ef,lty=1:2)
+```
