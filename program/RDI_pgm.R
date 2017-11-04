@@ -32,11 +32,12 @@ survival.time1 <- ifelse((ads6$EFS_DAY == 0),1,(ads6$EFS_DAY))
 survival.time2 <- ads6$OS_DAY
 survival.status2 <- ads6$DETH_FLG
 
-
+###ROC0: Endpoint=EfS, use ARDI, AGE2c, disease_risk
 fit0 <- coxph(Surv(survival.time1, survival.status) 
               ~ ARDI+AGE2C+disease_risk, data=ads6, na.action=na.omit)
 summary(fit0)
 eta <- fit0$linear.predictor
+
 ROC.CC10 <- risksetROC(Stime=survival.time1, status=survival.status, marker=eta, predict.time=1095, 
                        method="Cox", main="ROC Curve", lty=2, col="red")
 
@@ -44,3 +45,60 @@ AUC <- NULL
 out <- CoxWeights(marker=eta, Stime=survival.time1, status=survival.status, predict.time=1095)
                                        # to see how well the marker predicts 3-year survival
 AUC <- out$AUC
+
+###ROC1: Endpoint=OS, use ARDI, AGE2c, disease_risk
+fit1 <- coxph(Surv(survival.time2, survival.status2) 
+              ~ ARDI+AGE2C+disease_risk, data=ads6, na.action=na.omit)
+summary(fit1)
+eta1 <- fit1$linear.predictor
+
+ROC.CC10 <- risksetROC(Stime=survival.time2, status=survival.status2, marker=eta1, predict.time=1095, 
+                       method="Cox", main="ROC Curve", lty=2, col="red")
+
+AUC <- NULL
+out <- CoxWeights(marker=eta1, Stime=survival.time2, status=survival.status2, predict.time=1095)
+# to see how well the marker predicts 3-year survival
+AUC <- out$AUC
+
+###ROC2: Endpoint=OS, use RDI_ANT, AGE2c, disease_risk
+fit2 <- coxph(Surv(survival.time2, survival.status2) 
+              ~ RDI_ANT+AGE2C+disease_risk, data=ads6, na.action=na.omit)
+summary(fit2)
+eta2 <- fit2$linear.predictor
+
+ROC.CC10 <- risksetROC(Stime=survival.time2, status=survival.status2, marker=eta2, predict.time=1095, 
+                       method="Cox", main="ROC Curve", lty=2, col="red")
+
+AUC <- NULL
+out <- CoxWeights(marker=eta2, Stime=survival.time2, status=survival.status2, predict.time=1095)
+# to see how well the marker predicts 3-year survival
+AUC <- out$AUC
+
+###ROC3: Endpoint=OS, use RDI_ARAC, AGE2c, disease_risk
+fit3 <- coxph(Surv(survival.time2, survival.status2) 
+              ~ RDI_ARAC+AGE2C+disease_risk, data=ads6, na.action=na.omit)
+summary(fit3)
+eta3 <- fit3$linear.predictor
+
+ROC.CC10 <- risksetROC(Stime=survival.time2, status=survival.status2, marker=eta3, predict.time=1095, 
+                       method="Cox", main="ROC Curve", lty=2, col="red")
+
+AUC <- NULL
+out <- CoxWeights(marker=eta3, Stime=survival.time2, status=survival.status2, predict.time=1095)
+# to see how well the marker predicts 3-year survival
+AUC <- out$AUC
+
+###ROC4: Endpoint=OS, use RDI_VP16, AGE2c, disease_risk
+fit4 <- coxph(Surv(survival.time2, survival.status2) 
+              ~ RDI_VP16+AGE2C+disease_risk, data=ads6, na.action=na.omit)
+summary(fit4)
+eta4 <- fit4$linear.predictor
+
+ROC.CC10 <- risksetROC(Stime=survival.time2, status=survival.status2, marker=eta4, predict.time=1095, 
+                       method="Cox", main="ROC Curve", lty=2, col="red")
+
+AUC <- NULL
+out <- CoxWeights(marker=eta4, Stime=survival.time2, status=survival.status2, predict.time=1095)
+# to see how well the marker predicts 3-year survival
+AUC <- out$AUC
+
