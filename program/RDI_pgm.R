@@ -14,6 +14,18 @@ ads5 <- ads4[!is.na(ads4$EFS_DAY) & !is.na(ads4$EFS_FLG), ]   # extract rows w/o
 ads6 <- ads4[!is.na(ads4$EFF), ]   # extract rows w/o NA in EFF (efficacy analysis set)
 ads7 <- ads6[!is.na(ads6$FLT3_ITD1) & !is.na(ads6$SEX) & !is.na(ads6$AGE10) & !is.na(ads6$CYTO_FU), ]   # extract rows w/o FLT3_ITD1 and SEX and AGE1 and CYTO_FU from EFF pop. and 
 
+ads5$CYTO_T821[is.na(ads5$CYTO_T821)] <- 0
+ads5$CYTO_INV16[is.na(ads5$CYTO_INV16)] <- 0
+ads5$FLT3_ITD1[is.na(ads5$FLT3_ITD1)] <- 0
+ads5$CYTO_7[is.na(ads5$CYTO_7)] <- 0
+ads5$CYTO_5Q[is.na(ads5$CYTO_5Q)] <- 0
+ads5$CYTO_T1621[is.na(ads5$CYTO_T1621)] <- 0
+ads5$CYTO_PH1[is.na(ads5$CYTO_PH1)] <- 0
+ads5$FLT3_ITD1[is.na(ads5$FLT3_ITD1)] <- 0
+
+ads5$disease_risk <- ifelse((ads5$CYTO_T821 == 1 | ads5$CYTO_INV16 == 1) & (ads5$FLT3_ITD1 == 1), 1,
+                     ifelse((ads5$CYTO_7 == 1 | ads5$CYTO_5Q == 1 | ads5$CYTO_T1621 == 1 | ads5$CYTO_PH1 == 1 | ads5$FLT3_ITD1 == 1), 3, 2))
+
 # ROC analysis
 survival.time <- ads7$EFS_DAY
 survival.status <- ads7$EFS_FLG
