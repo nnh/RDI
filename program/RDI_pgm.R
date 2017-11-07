@@ -24,6 +24,9 @@ ads6$FLT3_ITD1[is.na(ads6$FLT3_ITD1)] <- 0
 ads6$disease_risk <- ifelse((ads6$CYTO_T821 == 1 | ads6$CYTO_INV16 == 1) & (ads6$FLT3_ITD1 == 1), 1,
                      ifelse((ads6$CYTO_7 == 1 | ads6$CYTO_5Q == 1 | ads6$CYTO_T1621 == 1 | ads6$CYTO_PH1 == 1 |
                              ads6$FLT3_ITD1 == 2), 3, 2))
+ads7 <- ads6[ads6$disease_risk == 1 & !is.na(ads6$ARDI2),]   # extract rows only LR
+
+
 # ROC analysis, to see how well the marker predicts 3-year survival
 auc <- NULL
 main_title <- NULL
@@ -42,6 +45,10 @@ roc1 <- risksetROC(Stime=survival_time1, status=survival_status, marker=eta1, pr
 out <- CoxWeights(marker=eta1, Stime=survival_time1, status=survival_status, predict.time=1095)
 auc[1] <- out$AUC
 
+tmax=1095
+AUC.CC1=risksetAUC(Stime=survival_time1, status=survival_status, marker=eta1, tmax=tmax,
+                  method="Cox",  lty=2, col="red")
+
 main_title[2] <- "ROC2: Endpoint=OS, use ARDI, AGE2c, disease_risk"
 fit2 <- coxph(Surv(survival_time2, survival_status2) ~ ARDI+AGE2C+disease_risk, data=ads6, na.action=na.omit)
 summary(fit2)
@@ -50,6 +57,11 @@ roc2 <- risksetROC(Stime=survival_time2, status=survival_status2, marker=eta2, p
                        method="Cox", main=main_title[2], lty=2, col="red")
 out <- CoxWeights(marker=eta2, Stime=survival_time2, status=survival_status2, predict.time=1095)
 auc[2] <- out$AUC
+
+tmax=1095
+AUC.CC2=risksetAUC(Stime=survival_time2, status=survival_status2, marker=eta2, tmax=tmax,
+                   method="Cox",  lty=2, col="green")
+
 
 main_title[3] <- "ROC3: Endpoint=OS, use RDI_ANT, AGE2c, disease_risk"
 fit3 <- coxph(Surv(survival_time2, survival_status2) ~ RDI_ANT+AGE2C+disease_risk, data=ads6, na.action=na.omit)
@@ -60,6 +72,10 @@ roc3 <- risksetROC(Stime=survival_time2, status=survival_status2, marker=eta3, p
 out <- CoxWeights(marker=eta3, Stime=survival_time2, status=survival_status2, predict.time=1095)
 auc[3] <- out$AUC
 
+tmax=1095
+AUC.CC3=risksetAUC(Stime=survival_time2, status=survival_status2, marker=eta3, tmax=tmax,
+                   method="Cox",  lty=2, col="blue")
+
 main_title[4] <- "ROC4: Endpoint=OS, use RDI_ARAC, AGE2c, disease_risk"
 fit4 <- coxph(Surv(survival_time2, survival_status2) ~ RDI_ARAC+AGE2C+disease_risk, data=ads6, na.action=na.omit)
 summary(fit4)
@@ -69,6 +85,11 @@ roc4 <- risksetROC(Stime=survival_time2, status=survival_status2, marker=eta4, p
 out <- CoxWeights(marker=eta4, Stime=survival_time2, status=survival_status2, predict.time=1095)
 auc[4] <- out$AUC
 
+tmax=1095
+AUC.CC4=risksetAUC(Stime=survival_time2, status=survival_status2, marker=eta4, tmax=tmax,
+                      method="Cox",  lty=2, col="pink")
+
+
 main_title[5] <- "ROC5: Endpoint=OS, use RDI_VP16, AGE2c, disease_risk"
 fit5 <- coxph(Surv(survival_time2, survival_status2) ~ RDI_VP16+AGE2C+disease_risk, data=ads6, na.action=na.omit)
 summary(fit5)
@@ -77,3 +98,21 @@ roc5 <- risksetROC(Stime=survival_time2, status=survival_status2, marker=eta5, p
                        method="Cox", main=main_title[5], lty=2, col="red")
 out <- CoxWeights(marker=eta5, Stime=survival_time2, status=survival_status2, predict.time=1095)
 auc[5] <- out$AUC
+
+AUC.CC5=risksetAUC(Stime=survival_time2, status=survival_status2, marker=eta5, tmax=tmax,
+                   method="Cox",  lty=2, col="purple")
+
+main_title[6] <- "ROC6: Endpoint=EfS, use ARDI2 and ads7"
+fit6 <- coxph(Surv(survival_time1, survival_status) ~ ARDI, data=ads7, na.action=na.omit)
+summary(fit6)
+eta6 <- fit6$linear.predictor
+roc6 <- risksetROC(Stime=survival_time1, status=survival_status, marker=eta6, predict.time=300,
+                   method="Cox", main=main_title[6], lty=2, col="red")
+out <- CoxWeights(marker=eta6, Stime=survival_time1, status=survival_status, predict.time=300)
+auc[6] <- out$AUC
+
+tmax=300
+AUC.CC6=risksetAUC(Stime=survival_time1, status=survival_status, marker=eta6, tmax=tmax,
+                   method="Cox",  lty=2, col="red")
+
+
