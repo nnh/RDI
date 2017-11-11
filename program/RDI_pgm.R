@@ -79,7 +79,7 @@ AUC.CC3=risksetAUC(Stime=survival_time2, status=survival_status2, marker=eta3, t
 main_title[4] <- "ROC4: Endpoint=OS, use RDI_ARAC, AGE2c, disease_risk"
 fit4 <- coxph(Surv(survival_time2, survival_status2) ~ RDI_ARAC+AGE2C+disease_risk, data=ads6, na.action=na.omit)
 summary(fit4)
-eta4 <- fit4$linear.predictor
+eta4 <- fit4$linear.predictors
 roc4 <- risksetROC(Stime=survival_time2, status=survival_status2, marker=eta4, predict.time=1095,
                        method="Cox", main=main_title[4], lty=2, col="red")
 out <- CoxWeights(marker=eta4, Stime=survival_time2, status=survival_status2, predict.time=1095)
@@ -114,5 +114,31 @@ auc[6] <- out$AUC
 tmax=300
 AUC.CC6=risksetAUC(Stime=survival_time1, status=survival_status, marker=eta6, tmax=tmax,
                    method="Cox",  lty=2, col="red")
+
+
+
+main_title[7] <- "ROC7: Endpoint=EfS, use ARDI"
+fit7 <- coxph(Surv(survival_time1, survival_status) ~ ARDI, data=ads6, na.action=na.omit)
+summary(fit7)
+
+eta7 <- fit7$linear.predictors
+
+nobs <- length(survival_time1[survival_status==1])
+span <- 1.0*(nobs^(0.2))
+ROC.LL1095=risksetROC(Stime=survival_time1, status=survival_status, marker=eta7, predict.time=1095,
+                   method="LocalCox", plot=TRUE, span=span, prop=1.0, main=main_title[7], lty=2, col="red")
+
+main_title[8] <- "ROC8: Endpoint=OS, use ARDI1"
+fit8 <- coxph(Surv(survival_time2, survival_status2) ~ ARDI1, data=ads6, na.action=na.omit)
+summary(fit8)
+
+eta8 <- fit8$linear.predictors
+
+nobs <- length(survival_time2[survival_status2==1])
+span <- 1.0*(nobs^(0.2))
+ROC.LL100=risksetROC(Stime=survival_time2, status=survival_status2, marker=eta8, predict.time=100,
+                    method="LocalCox", plot=TRUE, span=span, prop=1.0, main=main_title[8], lty=2, col="red")
+
+cox.zph(fit4) 
 
 
