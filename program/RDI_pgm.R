@@ -54,14 +54,12 @@ RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("ARDI", "AGE2C", "disease_risk")
 RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("AGE2C", "disease_risk"), ads6)
 RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("ARDI"), ads6)
 RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("ARDI1"), ads6)
-RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("ARDI2"), ads6)   #error
 RocAuc(1095, ads8$EFS_1, ads8$EFS_FLG, "EFS", c("ARDI2"), ads8)
 
 RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("ARDI", "AGE2C", "disease_risk"), ads6)
 RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("AGE2C", "disease_risk"), ads6)
 RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("ARDI"), ads6)
 RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("ARDI1"), ads6)
-RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("ARDI2"), ads6)   #error
 RocAuc(1095, ads8$OS_DAY, ads8$DETH_FLG, "OS", c("ARDI2"), ads8)
 
 
