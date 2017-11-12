@@ -5,24 +5,24 @@ RocAuc <- function(predict_time, survival_time, status, event, variable, datafra
   fit <- coxph(Surv(survival_time, status) ~ data.matrix(dataframe[, variable]), data=dataframe, na.action=na.omit)
   eta <- fit$linear.predictors
   span <- 1.0 * (length(survival_time[status == 1]) ^ -0.2)
-  maintitle <- paste(event, paste(variable, collapse=","),"ROC", sep="_")
+  main_title <- paste(event, paste(variable, collapse=","), "ROC", sep="_")
   roc <- risksetROC(Stime=survival_time, status=status, marker=eta, predict.time=predict_time,
-                    method="Schoenfeld", span=span, main=maintitle, lty=2, col="red")
+                    method="Schoenfeld", span=span, main=main_title, lty=2, col="red")
   text(0.75, 0.25, paste("AUC =", round(roc$AUC, 3)), cex=1.5)
-  # dev.copy2pdf(file=paste(basepath, paste(maintitle, "pdf", sep="."), sep="/"))
-  dev.copy(png, file=paste(basepath, paste(maintitle, "png", sep="."), sep="/"), width=1000)
+  # dev.copy2pdf(file=paste(basepath, paste(main_title, "pdf", sep="."), sep="/"))
+  dev.copy(png, file=paste(basepath, paste(main_title, "png", sep="."), sep="/"), width=1000)
   dev.off()
-  maintitle <- paste(event, paste(variable, collapse=","),"AUC", sep="_")
+  main_title <- paste(event, paste(variable, collapse=","), "AUC", sep="_")
   auc <- risksetAUC(Stime=survival_time, status=status, marker=eta, tmax=predict_time,
-                    method="Schoenfeld", span=span, main=maintitle, lty=2, col="red")
-  # dev.copy2pdf(file=paste(basepath, paste(maintitle, "pdf", sep="."), sep="/"))
-  dev.copy(png, file=paste(basepath, paste(maintitle, "png", sep="."), sep="/"), width=1000)
+                    method="Schoenfeld", span=span, main=main_title, lty=2, col="red")
+  # dev.copy2pdf(file=paste(basepath, paste(main_title, "pdf", sep="."), sep="/"))
+  dev.copy(png, file=paste(basepath, paste(main_title, "png", sep="."), sep="/"), width=1000)
   dev.off()
 }
 
 # Read input data
-ads1 <- read.csv('input/170427_ADS1.csv', as.is = T, fileEncoding = 'UTF-8-BOM')
-ads2 <- read.csv('input/170427_ADS2.csv', as.is = T, fileEncoding = 'UTF-8-BOM')
+ads1 <- read.csv('input/170427_ADS1.csv', as.is=T, fileEncoding='UTF-8-BOM')
+ads2 <- read.csv('input/170427_ADS2.csv', as.is=T, fileEncoding='UTF-8-BOM')
 
 # Make ADS
 max_therapy_code <- tapply(ads2$REAL_THERAPY_CD, ads2$ID, max)   # extract max therapy code for each patient ID
