@@ -48,12 +48,19 @@ ads8 <- ads6[ads6$RISK == 1 | ads6$RISK == 2 | ads6$RISK == 3 , ]
 # basepath <- "/Users/akiko/Dropbox/RDI-Outcome/Figures"
 basepath <- "C:/Users/akiko/Dropbox/RDI-Outcome/Figures"
 
-RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("ARDI", "AGE2C", "disease_risk"), ads6)
-RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("AGE2C", "disease_risk"), ads6)
+RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("ARDI", "AGE", "disease_risk"), ads6)
+RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("disease_risk"), ads6)
+RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("AGE2C"), ads6)
+RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("AGE"), ads6)
+RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("AGE", "disease_risk"), ads6)
 RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("ARDI"), ads6)
 RocAuc(1095, ads6$EFS_1, ads6$EFS_FLG, "EFS", c("ARDI1"), ads6)
 RocAuc(1095, ads8$EFS_1, ads8$EFS_FLG, "EFS", c("ARDI2"), ads8)
 
+RocAuc(90, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("ARDI"), ads6)
+RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("ARDI"), ads6)
+RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("AGE"), ads6)
+RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("disease_risk"), ads6)
 RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("ARDI", "AGE2C", "disease_risk"), ads6)
 RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("AGE2C", "disease_risk"), ads6)
 RocAuc(1095, ads6$OS_DAY, ads6$DETH_FLG, "OS", c("ARDI"), ads6)
